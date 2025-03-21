@@ -6,6 +6,7 @@
   "description": "Upload images to LskyPro.",
   "author": "woodchen",
   "authorUrl": "https://woodchen.ink",
+  "fundingUrl": "https://wise.com/pay/business/czlltd",
   "isDesktopOnly": true,
   "repo": "woodchen-ink/lskypro-uploader"
 }
