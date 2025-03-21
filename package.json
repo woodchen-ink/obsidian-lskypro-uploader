@@ -1,0 +1,41 @@
+{
+  "name": "lskypro-uploader",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Auto upload images from clipboard to LskyPro",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "version": "node version-bump.mjs && git add manifest.json versions.json"
+  },
+  "keywords": [
+    "obsidian.md",
+    "lsky",
+    "upload",
+    "auto"
+  ],
+  "author": "woodchen",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-typescript": "^11.1.0",
+    "@types/electron": "^1.6.10",
+    "@types/node": "^14.14.2",
+    "buffer": "^6.0.3",
+    "builtin-modules": "^4.0.0",
+    "esbuild": "^0.24.1",
+    "obsidian": "^1.2.8",
+    "process": "^0.11.10",
+    "rollup": "^3.21.6",
+    "stream": "^0.0.3",
+    "tslib": "^2.5.0",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "fix-path": "^4.0.0",
+    "image-type": "^5.2.0"
+  }
+}
