@@ -73,12 +73,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${{ steps.version.outputs.tag }}" \
-            --title="${{ steps.version.outputs.tag }}" \
-            --notes "Release ${{ steps.version.outputs.tag }}" \
-            ${{ env.PLUGIN_NAME }}-${{ steps.version.outputs.version }}.zip \
-            main.js \
-            manifest.json \
-            $([ -f "styles.css" ] && echo "styles.css") \
-            source-code.zip \
-            source-code.tar.gz
+          tag="${GITHUB_REF#refs/tags/}"
+          
+          files=()
+          for file in main.js manifest.json; do
+            if [ -f "$file" ]; then
+              files+=("$file")
+            else
+              echo "Warning: $file not found"
+              exit 1
+            fi
+          done
+
+          gh release create "$tag" \
+            --title="$tag" \
+            --draft \
+            "${files[@]}"
