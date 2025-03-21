@@ -3,7 +3,7 @@
   "name": "LskyPro Uploader",
   "version": "1.0.0",
   "minAppVersion": "0.15.0",
-  "description": "Auto upload images from clipboard to LskyPro.",
+  "description": "Upload images to LskyPro.",
   "author": "woodchen",
   "authorUrl": "https://woodchen.ink",
   "isDesktopOnly": true,
