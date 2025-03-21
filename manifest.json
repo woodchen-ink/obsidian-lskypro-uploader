@@ -1,7 +1,7 @@
 {
 	"id": "LskyPro-Uploader",
 	"name": "LskyPro Uploader",
-	"version": "1.0.1",
+	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
 	"description": "Upload images to LskyPro.",
 	"author": "woodchen",
