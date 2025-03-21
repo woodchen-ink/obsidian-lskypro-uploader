@@ -8,66 +8,22 @@ on:
 permissions:
   contents: write
 
-env:
-  PLUGIN_NAME: lskypro-upload
-
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # 获取完整历史记录
-      
+      - uses: actions/checkout@v4
+
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
-
-      - name: Get Version
-        id: version
-        run: |
-          echo "version=$(node -p "require('./manifest.json').version")" >> $GITHUB_OUTPUT
-          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-
-      - name: Check Version Match
-        run: |
-          if [ "${{ steps.version.outputs.version }}" != "${{ steps.version.outputs.tag }}" ]; then
-            echo "Version in manifest.json (${{ steps.version.outputs.version }}) does not match tag (${{ steps.version.outputs.tag }})"
-            exit 1
-          fi
-
-      - name: Install Dependencies
-        run: npm install
+          node-version: "22.x"
 
       - name: Build plugin
-        run: npm run build
-
-      - name: Create release package
         run: |
-          mkdir ${{ env.PLUGIN_NAME }}
-          cp main.js manifest.json ${{ env.PLUGIN_NAME }}
-          if [ -f "styles.css" ]; then
-            cp styles.css ${{ env.PLUGIN_NAME }}
-          fi
-          zip -r ${{ env.PLUGIN_NAME }}-${{ steps.version.outputs.version }}.zip ${{ env.PLUGIN_NAME }}
-
-      - name: Create source packages
-        run: |
-          # 创建临时目录
-          mkdir temp_source
-          # 复制所有文件到临时目录，排除不需要的文件
-          rsync -av --exclude='node_modules' --exclude='${{ env.PLUGIN_NAME }}' --exclude='*.zip' . temp_source/
-          
-          # 从临时目录创建压缩包
-          cd temp_source
-          zip -r ../source-code.zip .
-          tar czf ../source-code.tar.gz .
-          cd ..
-          
-          # 清理临时目录
-          rm -rf temp_source
+          npm install
+          npm run build
 
       - name: Create release
         env:
@@ -76,7 +32,7 @@ jobs:
           tag="${GITHUB_REF#refs/tags/}"
           
           files=()
-          for file in main.js manifest.json; do
+          for file in main.js manifest.json styles.css; do
             if [ -f "$file" ]; then
               files+=("$file")
             else
